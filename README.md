@@ -21,6 +21,10 @@
 <sup>*</sup>Corresponding author
 </div>
 
+<div align="center">
+  <img src="FGAesthetics+Q.png" width="900"/>
+</div>
+
 <div style="font-family: sans-serif; margin-bottom: 2em;">
     <h2 style="border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-bottom: 1em;">News</h2>
     <ul style="list-style-type: none; padding-left: 0;">
