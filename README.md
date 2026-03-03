@@ -11,8 +11,7 @@
 </div>
 
 <div align="center">
-  <sup>1</sup>School of Artificial Intelligence, Xidian University
-  <br>
+  <sup>1</sup>School of Artificial Intelligence,
   <sup>2</sup>State Key Laboratory of EMIM, Xidian University
 </div>
 
