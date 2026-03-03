@@ -13,7 +13,7 @@
 <div align="center">
   <sup>1</sup>School of Artificial Intelligence, Xidian University
   <br>
-  <sup>2</sup>State Key Laboratory of Electromechanical Integrated Manufacturing of High-Performance Electronic Equipments, Xidian University
+  <sup>2</sup>State Key Laboratory of EMIM, Xidian University
 </div>
 
 <div align="center">
