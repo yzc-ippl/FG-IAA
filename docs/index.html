@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Evaluating mathematical reasoning of foundation models in visual contexts">
+  <meta name="keywords" content="MathVista, Math Vista">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!--1. 这是网页名字 -->
+  <title>FG-IAA</title>
+
+  <link rel="icon" href="./static/images/icon.png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/leaderboard.css">
+
+  <script type="text/javascript" src="static/js/sort-table.js" defer></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/explorer-index.js"></script>
+  <script src="./static/js/question_card.js"></script>
+  <style>
+.gradient-text {
+  background: linear-gradient(90deg, #ff4b5c, #5f99ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title is-bold">
+  <span style="vertical-align: middle">
+    <span style="
+      background: linear-gradient(90deg, #ff4b5c, #5f99ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      font-weight: bold;
+    ">
+      Fine-grained
+    </span>
+    Image Aesthetic Assessment: Learning Discriminative Scores from Relative Ranks
+  </span>
+</h1>
+
+          <!-- <h1 class="title is-2 publication-title is-bold"> -->
+
+            <!--2. 图标，标题以及作者等等-->
+            <!-- <img src="static\images\cvpr_fig\tubiao.png" style="width:1em;vertical-align: middle" alt="Logo"/> -->
+            <!-- <span style="vertical-align: middle; white-space: nowrap;">Fine-grained Image Aesthetic Assessment:</span> -->
+        <!-- </h1> -->
+        <!-- <h1 class="title is-2 publication-title is-bold"> -->
+            <!-- <span style="vertical-align: middle">Learning Discriminative Scores from Relative Ranks</span> -->
+        <!-- </h1> -->
+         <div class="is-size-5 publication-authors">
+          <span class="author-block">
+            <a href="https://github.com/yzc-ippl">Zhichao Yang</a><sup>1†</sup>,
+          </span>
+          <span class="author-block">
+            <a href="https://github.com/satan-7">Jianjie Wang</a><sup>1†</sup>,
+          </span>
+          <span class="author-block">
+            <a href="https://github.com/jachinzhang1">Zhixianhe Zhang</a><sup>1</sup>,
+          </span>
+          <span class="author-block">
+            <a href="https://github.com/sleep-later">Pangu Xie</a><sup>1</sup>,
+          </span>
+          <span class="author-block">
+            <a href="https://github.com/sxfly99">Xiangfei Sheng</a><sup>1</sup>,
+          </span>
+          <span class="author-block">
+            <a href="https://github.com/cpf0079">Pengfei Chen</a><sup>1</sup>,
+          </span>
+          <span class="author-block">
+            <a href="https://web.xidian.edu.cn/ldli/">Leida Li</a><sup>1,2*</sup>
+          </span>
+        </div>
+
+        <div class="is-size-5 publication-authors">
+          <span class="author-block"><sup>1</sup>School of Artificial Intelligence, Xidian University</span>
+          &nbsp; <span class="author-block"><sup>2</sup>State Key Laboratory of EMIM, Xidian University</span>
+        </div>
+
+        <div class="is-size-5 publication-authors">
+          <span class="author-block" style="font-size: 0.9em;"><sup>†</sup>Equal contribution</span>
+          &nbsp; <span class="author-block" style="font-size: 0.9em;"><sup>*</sup>Corresponding author</span>
+        </div>
+
+        <style>
+  .cvpr-button {
+    background: linear-gradient(90deg, #ff4b5c, #5f99ff); /* 渐变背景色 */
+    color: white;                /* 文字颜色 */
+    border: none;                /* 去掉默认边框 */
+    border-radius: 25px;         /* 圆角 */
+    padding: 10px 25px;          /* 内边距 */
+    font-weight: 700;            /* 加粗 */
+    font-size: 1.1em;            /* 字体大小 */
+    cursor: pointer;             /* 鼠标样式 */
+    display: inline-flex;        /* 让内容水平排列 */
+    align-items: center;         /* 垂直居中 */
+    gap: 8px;                   /* 图标与文字间距 */
+    box-shadow: 0 4px 10px rgba(95, 153, 255, 0.4); /* 阴影 */
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .cvpr-button:hover {
+    background: linear-gradient(90deg, #5f99ff, #ff4b5c); /* 悬停时渐变反转 */
+    box-shadow: 0 6px 14px rgba(255, 75, 92, 0.6);
+  }
+
+  .cvpr-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(95, 153, 255, 0.7);
+  }
+</style>
+
+<button class="cvpr-button">
+  CVPR 2026 🎉
+</button>
+
+        <div class="column has-text-centered">
+          <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://github.com/yzc-ippl/FG-IAA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/yzc-ippl/FG-IAA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com/yzc-ippl/FG-IAA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <!-- <i class="far fa-images"></i> -->
+                      <p style="font-size:18px">🤗</p>
+                      <!-- 🔗 -->
+                  </span>
+                  <span>FGAesthetics</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/yzc-ippl/FG-IAA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <!-- <i class="far fa-images"></i> -->
+                      <p style="font-size:18px">🤗</p>
+                      <!-- 🔗 -->
+                  </span>
+                  <span>FGAesQ</span>
+                </a>
+              </span>
+              <!-- Leaderboard Link. -->
+              <span class="link-block">
+                <a href="https://github.com/yzc-ippl/FG-IAA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p style="font-size:18px">🏆</p>
+                  </span>
+                  <span>Demo-test</span>
+                </a>
+              </span>
+              <!-- Eval.AI Link -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 3.这里是第一幅大图的位置 -->
+<section class="section" style="padding-top: 0rem; margin-top: -1rem;">
+  <div class="container" style="margin-bottom: 1vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        
+        <img src="static\images\cvpr_fig\FGAesthetics+Q.png" alt="介绍图" style="max-width: 94%; height: auto; margin-bottom: 2rem;">
+        
+
+        <!-- 4.摘要 -->
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>Image aesthetic assessment (IAA)</b> has extensive applications in content creation, album management, and recommendation systems, etc. In such applications, it is commonly needed to pick out the most aesthetically pleasing image from a series of images with subtle aesthetic variations, a topic we refer to as <b><span class="gradient-text">Fine-grained IAA</span></b>. Unfortunately, state-of-the-art IAA models are typically designed for coarse-grained evaluation, where images with notable aesthetic differences are evaluated independently on an absolute scale. These models are inherently limited in discriminating fine-grained aesthetic differences.
+          </p>
+          <p>
+            To address the dilemma, we contribute <b><span class="gradient-text">FGAesthetics</span></b>, a fine-grained IAA database with <b>32,217 images</b> organized into <b>10,028 series</b>, which are sourced from diverse categories including Natural, AIGC, and Cropping. Annotations are collected via pairwise comparisons within each series. We also devise Series Refinement and Rank Calibration to ensure the reliability of data and labels.
+          </p>
+          <p>
+            Based on FGAesthetics, we further propose <b><span class="gradient-text">FGAesQ</span></b>, a novel IAA framework that learns discriminative aesthetic scores from relative ranks through Difference-preserved Tokenization (<b>DiffToken</b>), Comparative Text-assisted Alignment (<b>CTAlign</b>), and Rank-aware Regression (<b>RankReg</b>). FGAesQ enables accurate aesthetic assessment in fine-grained scenarios while still maintains competitive performance in coarse-grained evaluation.
+          </p>
+        </div>        
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</div>
+</section>
+
+
+<style>
+  /* 只限制第一个section的宽度和背景 */
+  .hero.fga-dataset {
+    width: 1400px;        /* 固定宽度，可以调整 */
+    margin: 0 auto;      /* 居中 */
+    background-color: #F5F5F5; /* 你想要的背景色 */
+  }
+</style>
+
+
+
+ <!-- 5.数据集部分 -->
+<section class="hero is-light is-small fga-dataset">
+  <div class="hero-body has-text-centered">
+  <h1 class="title is-1 mathvista">
+    <!-- 5.1.数据集标题 -->
+    <span style="vertical-align: middle; font-size: 36px; font-variant: normal;">FGAesthetics Dataset</span>
+  </h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-full-width has-text-centered"> -->
+        <div class="column is-four-fifths">
+        <!-- <h2 class="title is-3">Overview</h2> -->
+        <div class="content has-text-justified">
+          <!-- 5.2.数据集介绍 -->
+          <div class="content has-text-justified">
+            <p>
+              We contribute <b><span class="gradient-text">FGAesthetics</span></b>, a benchmark specifically designed for fine-grained aesthetics, comprising <b>32,217 images</b> organized into <b>10,028 series</b> with aesthetic ranking labels. To ensure diversity, we collect image series from three distinct sources: <b>Natural</b>, <b>AIGC</b>, and <b>Aesthetic cropping</b>. 
+              These series undergo rigorous filtering via a Metrics-MLLMs-Human refinement protocol, avoiding images that are either visually significantly dissimilar or indistinguishable. Human annotators then perform pairwise comparisons within each series, where pairs with ambiguous relative ordering are filtered to calibrate the global rankings and produce the final dataset.
+            </p>
+          </div>
+
+
+
+            <!-- 5.3.第一幅总括的图-->
+          <div class="content has-text-centered">
+            <img src="static\images\cvpr_fig\fig2.png" alt="algebraic reasoning" width="94%"/>
+          </div>
+
+          <p>
+          The pipeline consists of three stages:
+          <br>
+          (a) <b>Data Collection:</b> Visually similar photo series are collected from three distinct sources: Natural, AIGC, and Cropping.
+          <br>
+          (b) <b>Series Refinement:</b> Noisy series data undergo rigorous filtering using a Metric-MLLMs-Human refinement protocol.
+          <br>
+          (c) <b>Rank Calibration:</b> Pairwise comparisons are annotated within each series, excluding data that cannot be aesthetically distinguished to obtain calibrated aesthetic rankings.
+        </p>
+          
+           
+          <!-- 5.4.第一个表-->
+          <div class="content has-text-centered">
+            <img src="static\images\cvpr_fig\latex1.png" alt="arithmetic reasoning" width="90%"/><br>
+            Comparison between the proposed <b><span class="gradient-text">FGAesthetics</span></b> and representative IAA datasets.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+ <!-- 6.模型部分-->
+<!-- Model SECTION -->
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+  <h1 class="title is-1 mathvista">
+    <span style="vertical-align: middle; font-size: 36px; font-variant: normal;">FGAesQ Model</span>
+  </h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-full-width has-text-centered"> -->
+        <div class="column is-four-fifths">
+          <!-- <h2 class="title is-3">Overview</h2> -->
+          <div class="content has-text-justified">
+            <p>
+              <!-- 6.1.模型图和简介-->
+              Building on FGAesthetics, we further propose <b><span class="gradient-text">FGAesQ</span></b>, a new IAA model that enables accurate aesthetic assessment in fine-grained scenarios while maintaining robust performance in coarse-grained evaluation. This is achieved by learning discriminative aesthetic scores from relative ranks, where coarse-grained data establishes foundational aesthetic perception and fine-grained data refines the regression space for subtle aesthetic distinctions. Specifically, we introduce Difference-preserved Tokenization (<b>DiffToken</b>) that maintains distinctive details between similar images while scaling homogeneous regions. Comparative Text-assisted Alignment (<b>CTAlign</b>) is designed to further enhance the discrimination of visual representations. Finally, we develop Rank-aware Regression (<b>RankReg</b>), which leverages aesthetic rankings to calibrate score predictions, ensuring consistency between absolute assessments and relative aesthetic ordering.
+            </p>
+            <div class="content has-text-centered">
+              <img src="static\images\cvpr_fig\fig4.png" alt="grade-lv" width="100%"/>
+              <p>
+                Overall pipeline of the proposed <b><span class="gradient-text">FGAesQ</span></b>.
+            </div>
+          </div>
+          
+    </div>
+  </div>
+</section>
+
+<!-- Reuslt SECTION -->
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+  <h1 class="title is-1 mathvista">
+    <span style="vertical-align: middle; font-size: 36px; font-variant: normal;">Quantitative Results</span>
+  </h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-full-width has-text-centered"> -->
+        <div class="column is-four-fifths">
+          <!-- <h2 class="title is-3">Overview</h2> -->
+          <div class="content has-text-justified">
+            <p>
+              <b>Benchmark Results on <span class="gradient-text">FGAesthetics</span></b>. First, existing IAA models demonstrate significant performance degradation on fine-grained evaluation scenarios, particularly for series-level testing. Second, MLLM-based IAA approaches outperform traditional deep learning-based methods, with Q-Align showing very encouraging results even against fine-tuned models. This stems from the enhanced fine-grained perception capabilities afforded by larger parameters. Third, input scale-focused methods exhibit superior performance on cropping data, with fine-tuned MUSIQ achieving second-best results. Finally, <b><span class="gradient-text">FGAesQ</span></b> achieves the best performance across all evaluation protocols, demonstrating superior aesthetic discrimination capabilities in FG-IAA. Additionally, we evaluate <b><span class="gradient-text">FGAesQ</span></b> excluding DiffToken during inference, which operates without reference image comparison yet still maintains competitive performance.
+            </p>
+            <div class="content has-text-centered">
+              <img src="static\images\cvpr_fig\latex3.png" alt="grade-lv" width="100%"/>
+              <p>
+                Performance comparison between the proposed <b><span class="gradient-text">FGAesQ</span></b> and state-of-the-art IAA methods on <b><span class="gradient-text">FGAesthetics</span></b>.
+            </div>
+          </div>
+
+          <div class="content has-text-justified">
+            <p>
+              <br><b>Balance between Coarse- and Fine-grained IAA</b>. A robust IAA model is expected to handle both coarse- and fine-grained evaluation scenarios. Table-Left compares performance on both tasks, where <b><span class="gradient-text">FGAesQ</span></b> achieves the highest average results. Existing SOTA models fine-tuned with ranking loss show enhanced fine-grained capabilities but suffer severe coarse-grained degradation.
+              <br><b>Cross-dataset Evaluation</b>. We further conduct generalization evaluations on three IAA benchmarks, including ICAA17K (color aesthetics), AADB (aesthetic attributes), and TAD66K (theme-specific aesthetics), as summarized in Table-Right. <b><span class="gradient-text">FGAesQ</span></b> demonstrates superior generalization across all datasets, particularly exhibiting significant advantages on AADB. This suggests that training with fine-grained aesthetic comparisons enhances the perception of aesthetic attributes, enabling more accurate evaluation.
+            <div class="content has-text-centered">
+              <img src="static\images\cvpr_fig\table.png" alt="grade-lv" width="100%"/>
+              <p>
+                <b> Left: </b> Balance between coarse-grained (AVA) and fine-grained (<b><span class="gradient-text">FGAesthetics</span></b>) evaluations. <b>Right: </b> Cross-dataset validation on three IAA benchmarks: ICAA17K, AADB, and TAD66K.
+            </div>
+          </div>
+          
+    </div>
+  </div>
+</section>
+
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+  <h1 class="title is-1 mathvista">
+       <!-- 7.可视化展示标题-->
+       <span style="vertical-align: middle; font-size: 36px; font-variant: normal;">Qualitative Results</span>
+  </div>
+</section>
+    <div class="columns is-centered m-6">
+      <div class="column is-full has-text-centered content">
+        <!-- 1.自然系列 -->
+        <!-- <h2 class="title is-3">Natural Series</h2> -->
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static\images\cvpr_fig\natural1-yzc.png" alt="qs-len" width="50%"/>
+              <p><b style="font-size: 1.5em;">Natural Series</b></p>
+            </div>
+          </div>
+          <!-- 分界线 -->
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static\images\cvpr_fig\natural2-yzc.png" alt="qs-len" width="60%"/>
+              <p><b style="font-size: 1.5em;">Natural Series</b></p>
+            </div>
+          </div>
+          <!-- 分界线 -->
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static\images\cvpr_fig\natural3-yzc.png" alt="qs-len" width="47%"/>
+              <p><b style="font-size: 1.5em;">Natural Series</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- 2.aigc系列 -->
+  <div class="columns is-centered m-6">
+  <div class="column is-full has-text-centered content">
+   <!-- <h2 class="title is-3">AIGC Series</h2> -->
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static\images\cvpr_fig\aigc1-yzc.png" alt="qs-len" width="50%"/>
+              <p><b style="font-size: 1.5em;">AIGC Series</b></p>
+            </div>
+          </div>
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static\images\cvpr_fig\aigc2-yzc.png" alt="qs-len" width="50%"/>
+              <p><b style="font-size: 1.5em;">AIGC Series</b></p>
+            </div>
+          </div>
+          <!-- 分界线 -->
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static\images\cvpr_fig\aigc3-yzc.png" alt="qs-len" width="43%"/>
+              <p><b style="font-size: 1.5em;">AIGC Series</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   <!-- 3.crop系列 -->
+   <div class="columns is-centered m-6">
+    <div class="column is-full has-text-centered content">
+     <!-- <h2 class="title is-3">Crop Series</h2> -->
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static\images\cvpr_fig\crop1-yzc.png" alt="qs-len" width="60%"/>
+                <p><b style="font-size: 1.5em;">Crop Series</b></p>
+              </div>
+            </div>
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static\images\cvpr_fig\crop2-yzc.png" alt="qs-len" width="47%"/>
+                <p><b style="font-size: 1.5em;">Crop Series</b></p>
+              </div>
+            </div>
+            <!-- 分界线 -->
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static\images\cvpr_fig\crop3-yzc.png" alt="qs-len" width="40%"/>
+                <p><b style="font-size: 1.5em;">Crop Series</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- </section> -->
+
+<!-- RESULTS SECTION -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <pre><code>
+@article{yang2026fine,
+  title={Fine-grained Image Aesthetic Assessment: Learning Discriminative Scores from Relative Ranks},
+  author={Yang, Zhichao and Wang, jianjie and Zhang, Zhixianhe and Xie, Pangu and Sheng, Xiangfei and Chen, Pengfei and Li, Leida},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2026}
+}
+    </code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+<p style="font-size: 14px;">
+  This website is adapted from <a href="https://nerfies.github.io/">Nerfies</a> and <a href="https://dcd-anyedit.github.io/">AnyEdit</a>, licensed under a <a rel="license"
+                                              href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+  Commons Attribution-ShareAlike 4.0 International License</a>.
+</p>
+        </div>
+      </div>
+    </div>
+</footer>
+
+</body>
+</html>
