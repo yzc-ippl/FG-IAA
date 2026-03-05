@@ -1,3 +1,10 @@
+<div align="center">
+    <a href="[https://arxiv.org/abs/2512.09271](https://arxiv.org/abs/2603.03907)"><img src="https://img.shields.io/badge/Arxiv-preprint-red"></a>
+    <a href="https://yzc-ippl.github.io/FG-IAA/"><img src="https://img.shields.io/badge/Homepage-green"></a>
+    <a href='https://github.com/yzc-ippl/FG-IAA/stargazers'><img src='https://img.shields.io/github/stars/yzc-ippl/FG-IAA.svg?style=social'></a>
+</div>
+
+
 <h1 align="center">Fine-grained Image Aesthetic Assessment: Learning Discriminative Scores from Relative Ranks</h1>
 
 <div align="center">
