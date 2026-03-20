@@ -39,3 +39,17 @@
         </li>
     </ul>
 </div>
+
+
+## Citation
+
+If you find this work is useful, pleaes cite our paper!
+
+```bibtex
+@article{yang2026fine,
+  title={Fine-grained Image Aesthetic Assessment: Learning Discriminative Scores from Relative Ranks},
+  author={Yang, Zhichao and Wang, Jianjie and Zhang, Zhixianhe and Xie, Pangu and Sheng, Xiangfei and Chen, Pengfei and Li, Leida},
+  journal={arXiv preprint arXiv:2603.03907},
+  year={2026}
+}
+```
