@@ -35,6 +35,9 @@
     <h2 style="border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-bottom: 1em;">News</h2>
     <ul style="list-style-type: none; padding-left: 0;">
         <li style="margin-bottom: 0.8em;">
+            <strong>[2026-04-09]</strong> Congratulations! Our paper has been accepted for an <strong>Oral presentation</strong> at CVPR 2026.
+        </li>
+        <li style="margin-bottom: 0.8em;">
             <strong>[2026-02-21]</strong> Our paper, "Fine-grained Image Aesthetic Assessment: Learning Discriminative Scores from Relative Ranks", has been accepted to CVPR 2026!
         </li>
     </ul>
