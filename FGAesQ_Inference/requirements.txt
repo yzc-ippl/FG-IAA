@@ -1,0 +1,10 @@
+torch==2.6.0
+torchvision==0.21.0
+pillow==11.2.1
+# CLIP model
+clip @ git+https://github.com/openai/CLIP.git@dcba3cb2e2827b402d2701e7e1c7d9fed8a20ef1
+opencv-python==4.11.0.86
+scikit-image==0.25.2
+numpy==2.0.1
+tqdm==4.67.1
+matplotlib
