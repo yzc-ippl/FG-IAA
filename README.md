@@ -46,11 +46,9 @@
     </ul>
 </div>
 
-## Applicatons (More scenarios will be uncovered)
-
-<div align="center">
-  <video src="https://github.com/yzc-ippl/FG-IAA/releases/download/v1.0/demo_2.mp4" width="900" controls></video>
-</div>
+## Novel Applicatons (More scenarios will be uncovered)
+<strong>LivePhoto Cover Recommendation</strong>: Intelligently selects the best frame from LivePhoto sequences — optimal composition, natural expression, minimal motion blur, and no occlusion — for cover recommendation.
+[A Demo Video](https://github.com/yzc-ippl/FG-IAA/releases/download/v1.0/demo_2.mp4)
 
 ## Quick Start
 
