@@ -51,7 +51,7 @@
 
 ## Demo
 <div align="center">
-  <video src="https://github.com/user-attachments/assets/2afbbefd-e282-4064-8c3a-073bb910824c" width="900" controls></video>
+  <video src="https://github.com/user-attachments/assets/7f3f7b25-baf6-438a-a30c-6d092014333e" width="900" controls></video>
 </div>
 
 ## Quick Start
