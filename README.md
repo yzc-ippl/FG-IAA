@@ -70,7 +70,7 @@ pip install -r requirements.txt
 
 ### 2. Download Pre-trained Weights
 
-Download the pre-trained model weights from: [**(Hugging Face)**](https://huggingface.co/yzc002/FGAesQ) &nbsp;|&nbsp; [**(Baidu Netdisk)**](#)
+Download the pre-trained model weights from: [**(Hugging Face)**](https://huggingface.co/yzc002/FGAesQ) &nbsp;|&nbsp; [**(Baidu Netdisk)**](https://pan.baidu.com/s/1J6cSSweToyFmrbv4bTTwiA?pwd=dgxp)
 
 Place the downloaded weight file at a path of your choice and set `MODEL_PATH` accordingly in the inference scripts.
 
