@@ -78,14 +78,15 @@ The expected project structure is as follows:
 
 ```
 FG-IAA/
- utils/
-   ├── FGAesQ.py               # Model definition
-   ├── DiffToken.py            # Differential token preprocessing
-   ├── data_utils.py
-   └── clip_vit_base_16_224.pt
- inference_series.py         # Series-mode inference
- inference_single.py         # Single-image inference
- requirements.txt
+FGAesQ_Inference/
+   ├──utils/
+        ├── FGAesQ.py               # Model definition
+        ├── DiffToken.py            # Differential token preprocessing
+        ├── data_utils.py
+        └── clip_vit_base_16_224.pt
+   ├── inference_series.py         # Series-mode inference
+   ├── inference_single.py         # Single-image inference
+   ├── requirements.txt
  README.md
 ```
 
