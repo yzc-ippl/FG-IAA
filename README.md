@@ -46,13 +46,6 @@
     </ul>
 </div>
 
-## Novel Applicatons (More scenarios will be uncovered)
-<strong>LivePhoto Cover Recommendation</strong>: Intelligently selects the best frame from LivePhoto sequences — optimal composition, natural expression, minimal motion blur, and no occlusion — for cover recommendation.
-
-<div align="center">
-  <video src="https://github.com/user-attachments/assets/7f3f7b25-baf6-438a-a30c-6d092014333e" width="900" controls></video>
-</div>
-
 ## Quick Start
 
 This guide will help you get started with FGAesQ inference in minutes.
@@ -183,6 +176,13 @@ Order: 000009-02.jpg > 000009-01.jpg > 000009-03.jpg
 Each output file contains the predicted ranking and aesthetic scores for all images in that series, sorted from best to worst.
 
 ---
+
+## Novel Applicatons (More scenarios will be uncovered)
+<strong>LivePhoto Cover Recommendation</strong>: Intelligently selects the best frame from LivePhoto sequences — optimal composition, natural expression, minimal motion blur, and no occlusion — for cover recommendation.
+
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/7f3f7b25-baf6-438a-a30c-6d092014333e" width="900" controls></video>
+</div>
 
 ## Citation
 
