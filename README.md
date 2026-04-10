@@ -48,7 +48,11 @@
 
 ## Novel Applicatons (More scenarios will be uncovered)
 <strong>LivePhoto Cover Recommendation</strong>: Intelligently selects the best frame from LivePhoto sequences — optimal composition, natural expression, minimal motion blur, and no occlusion — for cover recommendation.
-[A Demo Video]
+
+## Demo
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/2afbbefd-e282-4064-8c3a-073bb910824c" width="900" controls></video>
+</div>
 
 ## Quick Start
 
@@ -63,9 +67,6 @@ git clone https://github.com/yzc-ippl/FG-IAA.git
 cd FG-IAA
 pip install -r requirements.txt
 ```
-
-> **Note:** The CLIP dependency is installed directly from the official OpenAI repository and will be fetched automatically via `pip install -r requirements.txt`.
-
 ### 2. Download Pre-trained Weights
 
 Download the pre-trained model weights from: [**(Hugging Face)**](https://huggingface.co/yzc002/FGAesQ) &nbsp;|&nbsp; [**(Baidu Netdisk)**](https://pan.baidu.com/s/1J6cSSweToyFmrbv4bTTwiA?pwd=dgxp)
