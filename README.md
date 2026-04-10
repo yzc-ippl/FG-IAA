@@ -49,7 +49,6 @@
 ## Novel Applicatons (More scenarios will be uncovered)
 <strong>LivePhoto Cover Recommendation</strong>: Intelligently selects the best frame from LivePhoto sequences — optimal composition, natural expression, minimal motion blur, and no occlusion — for cover recommendation.
 
-## Demo
 <div align="center">
   <video src="https://github.com/user-attachments/assets/7f3f7b25-baf6-438a-a30c-6d092014333e" width="900" controls></video>
 </div>
