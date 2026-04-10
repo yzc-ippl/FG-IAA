@@ -48,7 +48,7 @@
 
 ## Novel Applicatons (More scenarios will be uncovered)
 <strong>LivePhoto Cover Recommendation</strong>: Intelligently selects the best frame from LivePhoto sequences — optimal composition, natural expression, minimal motion blur, and no occlusion — for cover recommendation.
-[A Demo Video](https://github.com/yzc-ippl/FG-IAA/releases/download/v1.0/demo_2.mp4)
+[A Demo Video]
 
 ## Quick Start
 
