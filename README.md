@@ -177,7 +177,7 @@ Each output file contains the predicted ranking and aesthetic scores for all ima
 
 ---
 
-## Novel Applicatons (More scenarios will be uncovered)
+## Novel Applications (More scenarios will be uncovered)
 <strong>LivePhoto Cover Recommendation</strong>: Intelligently selects the best frame from LivePhoto sequences — optimal composition, natural expression, minimal motion blur, and no occlusion — for cover recommendation.
 
 <div align="center">
