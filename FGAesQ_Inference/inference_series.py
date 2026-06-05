@@ -1,4 +1,5 @@
 import os
+import platform
 import torch
 from PIL import Image
 from torch.utils.data import Dataset, DataLoader
@@ -7,11 +8,34 @@ from itertools import combinations
 from pathlib import Path
 from collections import defaultdict
 import numpy as np
-import hashlib
-import random
 
 from utils.FGAesQ import FGAesQ
 from utils.DiffToken import DiffToken
+
+
+def is_ubuntu_system():
+    if platform.system().lower() != 'linux':
+        return False
+
+    try:
+        with open('/etc/os-release', 'r', encoding='utf-8') as f:
+            for line in f:
+                normalized = line.strip().lower().replace('"', '')
+                if normalized == 'id=ubuntu':
+                    return True
+                if normalized.startswith('id_like=') and 'ubuntu' in normalized:
+                    return True
+    except OSError:
+        return False
+
+    return False
+
+
+def get_num_workers_for_system(default_num_workers):
+    system_name = platform.platform()
+    num_workers = default_num_workers if is_ubuntu_system() else 0
+    print(f"System: {system_name}")
+    return num_workers
 
 
 def load_model(model_path, device):
@@ -76,7 +100,7 @@ def get_image_files(folder_path):
     return sorted(image_files)
 
 
-def collect_series_info(input_folder, max_size=None):
+def collect_series_info(input_folder):
     series_data = {}
     subdirs = [d for d in os.listdir(input_folder) if os.path.isdir(os.path.join(input_folder, d))]
     
@@ -107,42 +131,18 @@ def collect_series_info(input_folder, max_size=None):
         
         if len(image_mapping) < 2:
             continue
-        
-        if max_size is not None:
-            processed_images = {}
-            for idx, img_name in image_mapping.items():
-                src_path = os.path.join(series_folder, img_name)
-                img = Image.open(src_path).convert('RGB')
-                width, height = img.size
-                max_dim = max(width, height)
-                
-                if max_dim > max_size:
-                    scale = max_size / max_dim
-                    new_width = int(width * scale)
-                    new_height = int(height * scale)
-                    img = img.resize((new_width, new_height), Image.LANCZOS)
-                
-                processed_images[idx] = img
-            
-            series_data[normalized_name] = {
-                'folder': series_folder,
-                'images': image_files,
-                'image_mapping': image_mapping,
-                'processed_images': processed_images
-            }
-        else:
-            series_data[normalized_name] = {
-                'folder': series_folder,
-                'images': image_files,
-                'image_mapping': image_mapping
-            }
+
+        series_data[normalized_name] = {
+            'folder': series_folder,
+            'images': image_files,
+            'image_mapping': image_mapping
+        }
     
     return series_data
 
 
-def create_pairs_and_symlinks(series_data, temp_dir):
+def create_pairs(series_data):
     pairs = []
-    os.makedirs(temp_dir, exist_ok=True)
     
     for series_name, data in series_data.items():
         image_indices = sorted(data['image_mapping'].keys())
@@ -151,26 +151,7 @@ def create_pairs_and_symlinks(series_data, temp_dir):
         for img1_idx, img2_idx in image_pairs:
             img1_name = data['image_mapping'][img1_idx]
             img2_name = data['image_mapping'][img2_idx]
-            
-            if 'processed_images' in data:
-                img1_path = os.path.join(temp_dir, img1_name)
-                img2_path = os.path.join(temp_dir, img2_name)
-                
-                if not os.path.exists(img1_path):
-                    data['processed_images'][img1_idx].save(img1_path, quality=95)
-                if not os.path.exists(img2_path):
-                    data['processed_images'][img2_idx].save(img2_path, quality=95)
-            else:
-                src_img1_path = os.path.join(data['folder'], img1_name)
-                src_img2_path = os.path.join(data['folder'], img2_name)
-                dst_img1_path = os.path.join(temp_dir, img1_name)
-                dst_img2_path = os.path.join(temp_dir, img2_name)
-                
-                if not os.path.exists(dst_img1_path):
-                    os.symlink(src_img1_path, dst_img1_path)
-                if not os.path.exists(dst_img2_path):
-                    os.symlink(src_img2_path, dst_img2_path)
-            
+
             pairs.append({
                 'series_id': series_name,
                 'img1_idx': img1_idx,
@@ -182,14 +163,14 @@ def create_pairs_and_symlinks(series_data, temp_dir):
     return pairs
 
 
-def evaluate_pairs(model, pairs, series_data, device, batch_size=64):
+def evaluate_pairs(model, pairs, series_data, device, batch_size=64, num_workers=16):
     dataset = SeriesInferenceDataset(
         pairs=pairs,
         series_data=series_data,
         clip_model=model.clip_model
     )
     
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=16)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
     model.eval()
     image_scores_all = defaultdict(list)
     
@@ -281,7 +262,7 @@ def save_series_result(series_name, image_scores, image_mapping, output_folder):
 
 
 def inference_series_auto(model_path, input_folder, output_folder, device='cuda', 
-                          batch_size=64, weighted=True, max_size=None):
+                          batch_size=64, weighted=True, num_workers=16):
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model not found: {model_path}")
     if not os.path.exists(input_folder):
@@ -291,28 +272,20 @@ def inference_series_auto(model_path, input_folder, output_folder, device='cuda'
     device = torch.device(device if torch.cuda.is_available() else 'cpu')
     
     model = load_model(model_path, device)
-    series_data = collect_series_info(input_folder, max_size)
+    series_data = collect_series_info(input_folder)
     
     if len(series_data) == 0:
         print("No valid series found")
         return
     
-    import tempfile
-    temp_dir = tempfile.mkdtemp()
-    
-    try:
-        pairs = create_pairs_and_symlinks(series_data, temp_dir)
-        image_scores_all = evaluate_pairs(model, pairs, series_data, device, batch_size)
-        image_scores = apply_confidence_adjustment(image_scores_all, series_data)
-        
-        for series_name, data in series_data.items():
-            save_series_result(series_name, image_scores, data['image_mapping'], output_folder)
-        
-        print(f"Completed: {output_folder}")
-    finally:
-        if os.path.exists(temp_dir):
-            import shutil
-            shutil.rmtree(temp_dir)
+    pairs = create_pairs(series_data)
+    image_scores_all = evaluate_pairs(model, pairs, series_data, device, batch_size, num_workers)
+    image_scores = apply_confidence_adjustment(image_scores_all, series_data)
+
+    for series_name, data in series_data.items():
+        save_series_result(series_name, image_scores, data['image_mapping'], output_folder)
+
+    print(f"Completed: {output_folder}")
 
 
 def main():
@@ -322,8 +295,9 @@ def main():
     DEVICE = "cuda:3"
     BATCH_SIZE = 64
     WEIGHTED = True
-    MAX_SIZE = 2048  # Max resolution limit (None for no limit). Higher resolution = slower inference. Use "MAX_SIZE = None" if only few images exceed 2048, otherwise "MAX_SIZE = 2048" is recommend. You can also define it yourself 
+    NUM_WORKERS = 16  # non-Ubuntu systems auto force it to 0.
 
+    NUM_WORKERS = get_num_workers_for_system(NUM_WORKERS)
 
     inference_series_auto(
         model_path=MODEL_PATH,
@@ -332,7 +306,7 @@ def main():
         device=DEVICE,
         batch_size=BATCH_SIZE,
         weighted=WEIGHTED,
-        max_size=MAX_SIZE
+        num_workers=NUM_WORKERS
     )
 
 
