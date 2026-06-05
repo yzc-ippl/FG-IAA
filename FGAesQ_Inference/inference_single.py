@@ -1,4 +1,5 @@
 import os
+import platform
 import torch
 from PIL import Image
 from tqdm import tqdm
@@ -6,6 +7,31 @@ from torch.utils.data import Dataset, DataLoader
 
 from utils.FGAesQ import FGAesQ
 from utils.DiffToken import DiffToken
+
+
+def is_ubuntu_system():
+    if platform.system().lower() != 'linux':
+        return False
+
+    try:
+        with open('/etc/os-release', 'r', encoding='utf-8') as f:
+            for line in f:
+                normalized = line.strip().lower().replace('"', '')
+                if normalized == 'id=ubuntu':
+                    return True
+                if normalized.startswith('id_like=') and 'ubuntu' in normalized:
+                    return True
+    except OSError:
+        return False
+
+    return False
+
+
+def get_num_workers_for_system(default_num_workers):
+    system_name = platform.platform()
+    num_workers = default_num_workers if is_ubuntu_system() else 0
+    print(f"System: {system_name}")
+    return num_workers
 
 
 def load_model(model_path, device):
@@ -94,7 +120,7 @@ def inference_aesthetic_single(model_path, input_path, output_txt=None, device='
         print("Inference failed")
 
 
-def inference_aesthetic_batch(model_path, input_folder, output_txt=None, batch_size=128, device='cuda'):
+def inference_aesthetic_batch(model_path, input_folder, output_txt=None, batch_size=128, device='cuda', num_workers=4):
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model not found: {model_path}")
     if not os.path.exists(input_folder):
@@ -118,7 +144,7 @@ def inference_aesthetic_batch(model_path, input_folder, output_txt=None, batch_s
         clip_model=model.clip_model
     )
     
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=4)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
     
     all_scores = []
     all_image_names = []
@@ -159,6 +185,9 @@ def main():
     OUTPUT_TXT = "/home/wyy2/Sdd_D/WJJ/wjj/MLLMS/FGAesQ/DATA/single_result.txt" # Output txt path (only for folder mode, None to auto-generate)
     DEVICE = "cuda"
     BATCH_SIZE = 128
+    NUM_WORKERS = 4  # non-Ubuntu systems auto force it to 0.
+
+    NUM_WORKERS = get_num_workers_for_system(NUM_WORKERS)
     
     output_txt = OUTPUT_TXT
     if output_txt is None and os.path.isdir(INPUT_PATH):
@@ -178,7 +207,8 @@ def main():
             input_folder=INPUT_PATH,
             output_txt=output_txt,
             batch_size=BATCH_SIZE,
-            device=DEVICE
+            device=DEVICE,
+            num_workers=NUM_WORKERS
         )
     else:
         print(f"Invalid path: {INPUT_PATH}")
