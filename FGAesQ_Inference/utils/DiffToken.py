@@ -59,9 +59,6 @@ class DiffToken:
                 if pos_embed.dim() == 2:
                     pos_embed = pos_embed.unsqueeze(0)
                 self.pos_embed = pos_embed
-                
-                os.makedirs('utils', exist_ok=True)
-                torch.save(self.pos_embed, 'utils/clip_vit_base_16_224.pt')
             except Exception as e:
                 print(f"Failed to extract CLIP positional embedding: {e}")
                 self.pos_embed = torch.randn(1, 197, 768) * 0.02
