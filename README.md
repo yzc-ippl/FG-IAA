@@ -189,10 +189,11 @@ Each output file contains the predicted ranking and aesthetic scores for all ima
 If you find this work useful, please cite our paper!
 
 ```bibtex
-@article{yang2026fine,
+@inproceedings{yang2026fine,
   title={Fine-grained Image Aesthetic Assessment: Learning Discriminative Scores from Relative Ranks},
   author={Yang, Zhichao and Wang, Jianjie and Zhang, Zhixianhe and Xie, Pangu and Sheng, Xiangfei and Chen, Pengfei and Li, Leida},
-  journal={arXiv preprint arXiv:2603.03907},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={145--155},
   year={2026}
 }
 ```
