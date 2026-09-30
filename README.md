@@ -35,6 +35,9 @@
     <h2 style="border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-bottom: 1em;">News</h2>
     <ul style="list-style-type: none; padding-left: 0;">
         <li style="margin-bottom: 0.8em;">
+            <strong>[2026-09-30]</strong> ✨</span>✨</span> The dataset <strong>FGAesthetics</strong> is publicly available at <a href="https://huggingface.co/datasets/yzc002/FGAesthetics">(Hugging Face)</a> <a href="https://pan.baidu.com/s/12JHUz-KkbaneOG_-rGTlHw?pwd=a3qv">(Baidu Netdisk)</a> 
+        </li>
+        <li style="margin-bottom: 0.8em;">
             <strong>[2026-04-10]</strong> ✨</span>✨</span> The <strong>Inference Code</strong> and <strong>Pre-trained Weights</strong>, are now publicly available. A demo video demonstrating FGAesQ's application in <strong>LivePhoto Cover Recommendation</strong> is also provided.
         </li>
         <li style="margin-bottom: 0.8em;">
