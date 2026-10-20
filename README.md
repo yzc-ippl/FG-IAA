@@ -198,6 +198,10 @@ python FGAesQ_Inference/evaluate_fgaesthetics.py \
   <video src="https://github.com/user-attachments/assets/7f3f7b25-baf6-438a-a30c-6d092014333e" width="900" controls></video>
 </div>
 
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/7fa5029a-5f57-48f8-886e-eba485d34fec" width="900" controls></video>
+</div>
+
 ## Citation
 
 If you find this work useful, please cite our paper!
