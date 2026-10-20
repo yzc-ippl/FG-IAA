@@ -178,6 +178,17 @@ Order: 000009-02.jpg > 000009-01.jpg > 000009-03.jpg
 
 Each output file contains the predicted ranking and aesthetic scores for all images in that series, sorted from best to worst.
 
+#### Evaluate the three FGAesthetics test sets
+
+Run the official series-mode evaluation. Replace the three test-set paths with
+your own paths.
+
+```bash
+python FGAesQ_Inference/evaluate_fgaesthetics.py \
+  /path/to/aigc_test.txt \
+  /path/to/crop_test.txt \
+  /path/to/natural_test.txt
+```
 ---
 
 ## Novel Applications (More scenarios will be uncovered)
